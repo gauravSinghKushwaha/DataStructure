@@ -1,9 +1,9 @@
 package com.gaurav.tree;
 
-import static com.nimbuzz.algo.linkedlist.LinkedListCreator.createLinkedList;
+import static com.gaurav.linkedlist.LinkedListCreator.createLinkedList;
 
-import com.nimbuzz.algo.linkedlist.LNode;
-import com.nimbuzz.algo.linkedlist.LinkedListCreator;
+import com.gaurav.linkedlist.LNode;
+import com.gaurav.linkedlist.LinkedListCreator;
 
 public class SortedLinkedListToBST {
     public static void main(final String args[]) {
