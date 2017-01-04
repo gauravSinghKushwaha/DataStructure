@@ -14,6 +14,6 @@ public class AnagramsByRecurssion {
 
         printAnagrams(input);
 
-        if(input)
+        // if(input)
     }
 }
