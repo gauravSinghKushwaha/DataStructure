@@ -1,11 +1,11 @@
 package com.nimbuzz.algo.linkedlist;
 
-import static com.nimbuzz.algo.tree.BinaryTreeCreator.createBinaryTree;
+import static com.gaurav.tree.BinaryTreeCreator.createBinaryTree;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import com.nimbuzz.algo.tree.TNode;
+import com.gaurav.tree.TNode;
 
 public class BinaryTreeToLinkedList {
     private static final Queue<TNode<Integer>> q = new ArrayBlockingQueue<TNode<Integer>>(99);
