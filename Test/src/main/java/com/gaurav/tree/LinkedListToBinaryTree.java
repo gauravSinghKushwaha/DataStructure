@@ -1,11 +1,11 @@
 package com.gaurav.tree;
 
-import static com.nimbuzz.algo.linkedlist.LinkedListCreator.createLinkedList;
+import static com.gaurav.linkedlist.LinkedListCreator.createLinkedList;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import com.nimbuzz.algo.linkedlist.LNode;
+import com.gaurav.linkedlist.LNode;
 
 /**
  * 
