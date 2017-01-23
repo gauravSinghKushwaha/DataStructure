@@ -1,7 +1,7 @@
 package com.gaurav.unsafe;
 
 import static java.lang.Integer.MAX_VALUE;
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
 
 import java.lang.reflect.Constructor;
 
@@ -10,50 +10,50 @@ import sun.misc.Unsafe;
 // creating array outside heap in native memory
 class DirectIntArray {
 
-    private final static long INT_SIZE_IN_BYTES = 4;
+	private final static long INT_SIZE_IN_BYTES = 4;
 
-    private final long startIndex;
+	public static void main(final String args[]) throws Exception {
+		// final long maximum = MAX_VALUE + 1L;
+		final long maximum = MAX_VALUE - MAX_VALUE / 2 - MAX_VALUE / 4;
+		final DirectIntArray directIntArray = new DirectIntArray(maximum);
+		directIntArray.setValue(0L, 10);
+		directIntArray.setValue(maximum, 20);
+		assertEquals(10, directIntArray.getValue(0L));
+		assertEquals(20, directIntArray.getValue(maximum));
+		directIntArray.destroy();
+	}
 
-    private final Unsafe unsafe;
+	private final long startIndex;
 
-    public DirectIntArray(final long size) throws Exception {
-        // final Field field = Unsafe.class.getField("theUnsafe");
-        // field.setAccessible(true);
-        // unsafe = (Unsafe) field.get(null);
+	private final Unsafe unsafe;
 
-        final Constructor<Unsafe> unsafeConstructor = Unsafe.class.getDeclaredConstructor();
-        unsafeConstructor.setAccessible(true);
-        unsafe = unsafeConstructor.newInstance();
+	public DirectIntArray(final long size) throws Exception {
+		// final Field field = Unsafe.class.getField("theUnsafe");
+		// field.setAccessible(true);
+		// unsafe = (Unsafe) field.get(null);
 
-        startIndex = unsafe.allocateMemory(size * INT_SIZE_IN_BYTES);
-        unsafe.setMemory(startIndex, size * INT_SIZE_IN_BYTES, (byte) 0);
-    }
+		final Constructor<Unsafe> unsafeConstructor = Unsafe.class.getDeclaredConstructor();
+		unsafeConstructor.setAccessible(true);
+		unsafe = unsafeConstructor.newInstance();
 
-    public void setValue(final long index, final int value) {
-        unsafe.putInt(index(index), value);
-    }
+		startIndex = unsafe.allocateMemory(size * INT_SIZE_IN_BYTES);
+		unsafe.setMemory(startIndex, size * INT_SIZE_IN_BYTES, (byte) 0);
+	}
 
-    public int getValue(final long index) {
-        return unsafe.getInt(index(index));
-    }
+	public void destroy() {
+		unsafe.freeMemory(startIndex);
+	}
 
-    private long index(final long offset) {
-        return startIndex + offset * INT_SIZE_IN_BYTES;
-    }
+	public int getValue(final long index) {
+		return unsafe.getInt(index(index));
+	}
 
-    public void destroy() {
-        unsafe.freeMemory(startIndex);
-    }
+	private long index(final long offset) {
+		return startIndex + offset * INT_SIZE_IN_BYTES;
+	}
 
-    public static void main(final String args[]) throws Exception {
-        // final long maximum = MAX_VALUE + 1L;
-        final long maximum = MAX_VALUE;
-        final DirectIntArray directIntArray = new DirectIntArray(maximum);
-        directIntArray.setValue(0L, 10);
-        directIntArray.setValue(maximum, 20);
-        assertEquals(10, directIntArray.getValue(0L));
-        assertEquals(20, directIntArray.getValue(maximum));
-        directIntArray.destroy();
-    }
+	public void setValue(final long index, final int value) {
+		unsafe.putInt(index(index), value);
+	}
 
 }

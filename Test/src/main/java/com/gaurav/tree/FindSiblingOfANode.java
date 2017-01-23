@@ -28,7 +28,7 @@ public class FindSiblingOfANode<T> {
             return null;
         }
         // Parent node having element as immediate left of right child
-        final TNode<T> parentNode = new SearchElementNode<T>().searchRootElement(root, element);
+        final TNode<T> parentNode = new BinaryTreeSearch<T>().searchRootElement(root, element);
 
         if (parentNode == null) {
             return null;
