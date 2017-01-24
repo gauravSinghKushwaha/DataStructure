@@ -36,8 +36,21 @@ public final class TNode<E> {
 
 	@Override
 	public String toString() {
-		return "\n Node [value=" + value + ", left=" + left + ", right="
-				+ right + "]";
+		final StringBuilder strB = new StringBuilder("\n Node [value=" + value
+				+ ", left=");
+		if (left != null && left.value() != null) {
+			strB.append(left().value());
+		} else {
+			strB.append("NULL");
+		}
+		strB.append(", right=");
+		if (right != null && right.value() != null) {
+			strB.append(right().value());
+		} else {
+			strB.append("NULL");
+		}
+		strB.append("]");
+		return "\n " + strB;
 	}
 
 	@Override
@@ -61,7 +74,7 @@ public final class TNode<E> {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final TNode other = (TNode) obj;
+		final TNode<?> other = (TNode<?>) obj;
 		if (left == null) {
 			if (other.left != null) {
 				return false;

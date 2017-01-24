@@ -2,7 +2,9 @@ package com.gaurav.tree;
 
 import static com.gaurav.tree.BinaryTreeCreator.createBinaryTree;
 
-public final class BinaryTreeSearch<T> {
+import java.util.LinkedList;
+
+public final class SearchBinaryTree<T> {
 
 	/**
 	 * If element is present then true else false
@@ -12,14 +14,38 @@ public final class BinaryTreeSearch<T> {
 	 * @return
 	 */
 	public boolean isPresent(final TNode<T> root, final T element) {
+		return isPresent(root, element, null);
+	}
+
+	/**
+	 * If element is present then true else false
+	 *
+	 * list passed in as path would have path from root to element
+	 *
+	 * @param root
+	 * @param element
+	 * @return
+	 */
+	public boolean isPresent(final TNode<T> root, final T element,
+			final LinkedList<TNode<T>> path) {
 		if (root == null) {
 			return false;
 		}
 		if (element.equals(root.value())) {
+			if (path != null) {
+				path.addFirst(root);
+			}
 			return true;
 		}
-		return isPresent(root.left(), element)
-				|| isPresent(root.right(), element);
+		final boolean isPresentInLeft = isPresent(root.left(), element, path);
+		if (isPresentInLeft && path != null) {
+			path.addFirst(root);
+		}
+		final boolean isPresentInRight = isPresent(root.right(), element, path);
+		if (isPresentInRight && path != null) {
+			path.addFirst(root);
+		}
+		return isPresentInLeft || isPresentInRight;
 	}
 
 	/**
@@ -74,9 +100,16 @@ public final class BinaryTreeSearch<T> {
 	}
 
 	public static void main(final String arsg[]) {
-		final BinaryTreeSearch<Integer> obj = new BinaryTreeSearch<Integer>();
+		final SearchBinaryTree<Integer> obj = new SearchBinaryTree<Integer>();
 		final TNode<Integer> root = createBinaryTree();
+		root.printTree();
 		final int element = 12;
+		LinkedList<TNode<Integer>> path = new LinkedList<TNode<Integer>>();
+		System.out.println("element " + element + " is Present ="
+				+ obj.isPresent(root, element, path) + " path = " + path);
+		path = new LinkedList<TNode<Integer>>();
+		System.out.println("element " + 50 + " is Present ="
+				+ obj.isPresent(root, 50, path) + " path = " + path);
 		System.out.println("element " + element + " is Present ="
 				+ obj.isPresent(root, element));
 		System.out.println("element " + element + " node is "
