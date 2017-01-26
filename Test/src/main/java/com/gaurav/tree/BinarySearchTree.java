@@ -36,9 +36,9 @@ public final class BinarySearchTree<T extends Comparable<T>> {
     }
 
     private TNode<T> findPositionForNewNode(final TNode<T> root, final TNode<T> element) {
-        if (isLeaf(root)) { // A leaf
-            return root;
-        }
+        // if (isLeaf(root)) { // A leaf
+        // return root;
+        // }
 
         if (element.value().compareTo(root.value()) < 0) {
             // if root has a child, search through, else return root
@@ -52,12 +52,8 @@ public final class BinarySearchTree<T extends Comparable<T>> {
             }
             return root;
         } else {
-            throw new IllegalArgumentException(element.value() + "already exists");
+            throw new IllegalArgumentException(element.value() + " already exists");
         }
-    }
-
-    private boolean isLeaf(final TNode<T> root) {
-        return root.left() == null && root.right() == null;
     }
 
     public TNode<T> searchBST(final TNode<T> root, final TNode<T> element) {
@@ -76,11 +72,6 @@ public final class BinarySearchTree<T extends Comparable<T>> {
     public static void main(final String args[]) {
         final TNode<Integer> root = createExampleBST();
         root.printTree();
-        final TNode<Integer> root2 = new TNode<Integer>(0, null, null);
-        for (int i = -5; i < 10; i++) {
-            bst.addNodeToBST(root2, i);
-        }
-        root2.printTree();
         System.out.println(bst.searchBST(root, 22));
         System.out.println(bst.searchBST(root, 7));
         System.out.println(bst.searchBST(root, 3));
